@@ -20,11 +20,9 @@ int main()
     if (D<0){
     cout << "No any result";}
     x = (-b-sqrt(D))/(2*a);
-        y = (-b+sqrt(D))/(2*a);
+    y = (-b+sqrt(D))/(2*a);
 
     if (D>=0, a>0, a<0){
         cout << " first radix " << x << "second radix " << y;}
         return 0;
-
-
 }
