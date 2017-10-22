@@ -15,7 +15,7 @@ int main()
     }
     while (a!=0);
     double d;
-    d=(int)s/(int)n;
+    d=s/n;
     cout <<"result " << d;
     return 0;
 }
