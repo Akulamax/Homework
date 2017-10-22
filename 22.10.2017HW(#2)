@@ -1,0 +1,33 @@
+/*Напишите программу, проверяющую является ли число составным. В программе гарантируется, что число - натуральное.*/
+#include <iostream>
+using namespace std;
+int main()
+{
+    int a,b;
+    cin >> a;
+    if (a == 1)
+    {
+        cout << a <<" Unit";
+    }
+    else
+    {
+
+        for (int i=2; i*i<=a; i++)
+        {
+
+            if (a%i == 0)
+            {
+                b=a;
+            }
+        }
+        if (b==a)
+        {
+            cout << a << " Composite";
+        }
+        else
+        {
+            cout << a <<" Prime";
+        }
+    }
+    return 0;
+}
