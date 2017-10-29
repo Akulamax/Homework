@@ -1,0 +1,20 @@
+/*Напишите рекурсивную функцию pow( быстрое возведение вещественного числа в целую степень) и пример программы её использующей. */
+#include <iostream>
+using namespace std;
+double pow (double a, int k){
+    if (a==0)
+        return 0;
+if (k==0){
+    return 1;}
+if (k%2==1){
+    return a*pow(a,k-1);}
+if (k%2==0){
+    return  pow(a*a,k/2 );}
+}
+int main()
+{double a;
+double k;
+cin >>a>>k;
+ cout<<pow(a,k);
+    return 0;
+}
