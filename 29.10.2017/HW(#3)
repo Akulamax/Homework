@@ -16,5 +16,6 @@ int main()
             sum+=A[i];
     }
     cout << sum;
+    delete []A;
     return 0;
 }
