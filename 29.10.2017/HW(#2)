@@ -2,8 +2,6 @@
 #include <iostream>
 using namespace std;
 double pow (double a, int k){
-    if (a==0)
-        return 0;
 if (k==0){
     return 1;}
 if (k%2==1){
