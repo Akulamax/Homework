@@ -1,0 +1,42 @@
+/*Напишите программу для работы с оценками за сессию студентов.
+В программе должна присутствовать структура хранящая ФИО,
+оценки за 6 экзаменов для каждого ученика и умеющая (соответствующими методами) вычислять средний балл студента,
+наличие стипендии(стипендия начисляется закрывшим сессию без троек),
+задолженностей (сессия считается закрытой без долгов, если все оценки выше 2)
+в программе должны быть функции для работы с массивом студентов находящие средний балл(всех без двух лучших и двух худших),
+количества стипендиатов, должников и отчисленных(более двух долгов)*/
+#include <iostream>
+using namespace std;
+struct students
+{
+    char *FIO;
+    double exam_1,exam_2,exam_3,exam_4,exam_5,exam_6;
+    students (char*m,double a,double b,double c,double d,double e,double f):
+        FIO(m),exam_1(a),exam_2(b),exam_3(c),exam_4(d),exam_5(e),exam_6(f) {}
+    double avg (double exam_1,double exam_2,double exam_3,double exam_4,double exam_5,double exam_6)
+    {
+        double res;
+        res=(exam_1+exam_2+exam_3+exam_4+exam_5+exam_6)/6;
+        return res;
+    }
+    void stependia (double exam_1,double exam_2,double exam_3,double exam_4,double exam_5,double exam_6)
+    {
+        if (exam_1>3 && exam_2>3 && exam_3>3 && exam_4>3 && exam_5>3 && exam_6>3)
+            cout <<"stependiat"<<endl;
+        if (exam_1==2 || exam_2==2 || exam_3==2 || exam_4==2 || exam_5==2 || exam_6==2)
+            cout <<"doljnik"<<endl;
+    }
+};
+int main()
+{
+    double exam_1,exam_2,exam_3,exam_4,exam_5,exam_6;
+    char FIO[100];
+    cin>>FIO;
+    cin>>exam_1>>exam_2>>exam_3>>exam_4>>exam_5>>exam_6;
+    students A(FIO,exam_1,exam_2,exam_3,exam_4,exam_5,exam_6);
+    cout<<FIO<<endl;
+    cout <<A.avg( exam_1,exam_2,exam_3, exam_4, exam_5,exam_6)<<endl;
+    A.stependia( exam_1,exam_2,exam_3, exam_4, exam_5,exam_6);
+    return 0;
+}
+
