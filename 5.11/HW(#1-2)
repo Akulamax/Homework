@@ -1,0 +1,164 @@
+/*Напишите программу для работы с датами согласно григорианскому календарю. В программе должны присутствовать:
+структура хранящая год,месяц, число и умеющая(с помощью соответствующего метода) определять по дате день недели
+3 функции определяющие сколько лет, месяцев и дней прошло между двумя датами*/
+#include <iostream>
+using namespace std;
+struct struct_date
+{
+    int day,month,year;
+    struct_date (int a, int b, int c):
+        day(a), month(b), year(c) {}
+    int date()
+    {
+        int x, w, z, d;
+        x = ( 14 - month ) / 12;
+        w = year - x;
+        z = month + 12 * x - 2;
+        d = ( ( day + w + w / 4 - w / 100 + w / 400 + (31 * z) / 12 )) % 7;
+        return d;
+    }
+};
+int kolyear(int day1,int month1,int year1,int day2,int month2,int year2)
+{
+    if (year1 < year1)
+    {
+        int y = year1, u = month1, h = day1;
+        year1 = year2;
+        month1 = month2;
+        day1 = day2;
+        year2 = y;
+        month2 = u;
+        day2 = h;
+    }
+    int y = 0;
+    if (year1 != year2)
+    {
+        if (month1 > month2)
+            y = year1 - year2;
+        if (month1 == month2)
+        {
+            if (day1 >= day2)
+                y = year1 - year2;
+
+            else
+
+                y = year1 - year2 - 1;
+        }
+        if (month1 < month2)
+            y = year1 - year2 - 1;
+    }
+
+    else
+
+    {
+        y = 0;
+    }
+    return y;
+}
+int kolmonth(int day1,int month1,int year1,int day2,int month2,int year2)
+{
+    if (year1 < year2)
+    {
+        int y = year1, u = month1, h = day1;
+        year1 = year2;
+        month1 = month2;
+        day1 = day2;
+        year2 = y;
+        month2 = u;
+        day2 = h;
+    }
+    int z=0;
+    if (year1 == year2)
+    {
+        if (month1 > month2)
+        {
+            if (day1 >= day2)
+                z = month1 - month2;
+
+            else
+
+                z = month1 - month2 - 1;
+        }
+        if (month1 == month2)
+        {
+            z = 0;
+        }
+        if (month1 < month2)
+        {
+            if (day1 > day2)
+                z = month1 - month2 + 1;
+
+            else
+
+                z = month1 - month2;
+        }
+        if(z < 0)
+            z = -z;
+    }
+    else
+    {
+        if (month1 < month2)
+        {
+            if (day1 > day2)
+            {
+                z = (12 - month2) + month1;
+            }
+            else
+            {
+                z = (12 - month2) + month1 -1;
+            }
+        }
+        else
+        {
+            if (day1 > day2)
+            {
+                z = month1 - month2 -1;
+            }
+            else
+            {
+                z = month1 - month2;
+            }
+        }
+    }
+    return z;
+}
+int kolday(int day1,int month1,int year1,int day2,int month2,int year2)
+{
+    int r;
+    r = ( 1461 * ( year1 + 4800 + ( month1 - 14 ) / 12)) / 4 +
+        ( 367 * ( month1 - 2 - 12 * (( month1 - 14 ) / 12))) / 12 -
+        3 * (( year1 + 4900 + ( month1 - 14 ) / 12) / 100) / 4 + day1 - 32075
+        - (( 1461 * ( year2 + 4800 + ( month2 - 14 ) / 12)) / 4 +
+           ( 367 * ( month2 - 2 - 12 * (( month2 - 14 ) / 12))) / 12 -
+           3 * (( year2 + 4900 + ( month2 - 14 ) / 12) / 100) / 4 + day2 - 32075);
+    if (r < 0) r = -r;
+    return r;
+}
+int main()
+{
+    int a,b,c;
+    cout<<"day,month,year"<<endl;
+    cin>>a>>b>>c;
+    struct_date A (a,b,c);
+    if(A.date()==1)
+        cout<< "Monday" << endl;
+    else if(A.date()==2)
+        cout<< "Tuesday" << endl;
+    else if(A.date()==3)
+        cout<< "Wednesday" << endl;
+    else if(A.date()==4)
+        cout<< "Thursday" << endl;
+    else if(A.date()==5)
+        cout<< "Friday" << endl;
+    else if(A.date()==6)
+        cout<< "Saturday" << endl;
+    else if(A.date()==0)
+        cout<< "Sunday" << endl;
+    int day1, month1, year1, day2, month2, year2;
+    cout<<"day1, month1, year1, day2, month2, year2"<<endl;
+    cin>>day1>>month1>>year1>>day2>>month2>>year2;
+    cout <<"kol_year "<< kolyear(day1, month1, year1, day2, month2, year2) << endl;
+    cout <<"kol_month "<< kolmonth(day1, month1, year1, day2, month2, year2) + kolyear(day1, month1, year1, day2, month2, year2) * 12 << endl;
+    cout <<"kol_day "<< kolday(day1, month1, year1, day2, month2, year2) << endl;
+    return 0;
+}
