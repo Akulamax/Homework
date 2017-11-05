@@ -2,6 +2,7 @@
 структура хранящая год,месяц, число и умеющая(с помощью соответствующего метода) определять по дате день недели
 3 функции определяющие сколько лет, месяцев и дней прошло между двумя датами*/
 #include <iostream>
+#include <cmath>
 using namespace std;
 struct struct_date
 {
@@ -38,14 +39,14 @@ int kolyear(int day1,int month1,int year1,int day2,int month2,int year2)
         if (month1 == month2)
         {
             if (day1 >= day2)
-                y = year1 - year2;
+                y = abs(year1 - year2);
 
             else
 
-                y = year1 - year2 - 1;
+                y = abs(year1 - year2 - 1);
         }
         if (month1 < month2)
-            y = year1 - year2 - 1;
+            y = abs(year1 - year2 - 1);
     }
 
     else
@@ -73,11 +74,11 @@ int kolmonth(int day1,int month1,int year1,int day2,int month2,int year2)
         if (month1 > month2)
         {
             if (day1 >= day2)
-                z = month1 - month2;
+                z = abs(month1 - month2);
 
             else
 
-                z = month1 - month2 - 1;
+                z = abs(month1 - month2 - 1);
         }
         if (month1 == month2)
         {
@@ -86,11 +87,11 @@ int kolmonth(int day1,int month1,int year1,int day2,int month2,int year2)
         if (month1 < month2)
         {
             if (day1 > day2)
-                z = month1 - month2 + 1;
+                z = abs(month1 - month2 + 1);
 
             else
 
-                z = month1 - month2;
+                z = abs(month1 - month2);
         }
         if(z < 0)
             z = -z;
