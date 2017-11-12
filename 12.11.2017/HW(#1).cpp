@@ -1,8 +1,8 @@
 /*Напишите программу, которая удаляет из массива все простые числа встречающиеся больше одного раза.*/
 #include <iostream>
 using namespace std;
-bool prostoe (int a,int n){
-for (int i=2;i*i<n;i++){
+bool prostoe (int a){
+for (int i=2;i*i<=a;i++){
 if (a%i==0 && a!=2)
     return false;
 }
@@ -21,7 +21,7 @@ int main()
    for (int i=0;i<n;i++)
     cin>>A[i];
    for (int i=0;i<n;i++){
-    if (!prostoe(A[i],n)||A[i]==1)
+    if (!prostoe(A[i])||A[i]==1)
     continue;
     if(i<=n-2){
     for ( int j=i+1;j<n;j++){
