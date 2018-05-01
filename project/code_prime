@@ -24,7 +24,7 @@ int Powmod (long long int a, long long int k,  long long int n)
     return res;
 }
 //! Переводит число n в форму q*2^p
-void transform_num (unsigned long long int n,long long int  p, long long int  q)
+void transform_num ( long long int n,long long int  p, long long int  q)
 {
 	long long int p_res = 0;
 	while (n%2==0)
@@ -36,7 +36,7 @@ void transform_num (unsigned long long int n,long long int  p, long long int  q)
 	q = n;
 }
 //! Тест Миллера-Рабина
-bool miller_rabin (unsigned long long int n)
+bool miller_rabin ( long long int n)
 {
     // сначала проверяем тривиальные случаи
     if (n == 2)
@@ -50,18 +50,17 @@ bool miller_rabin (unsigned long long int n)
         if (n > g)
             return false;
     // разлагаем n-1 = q*2^p
-   unsigned long long int N = n-1;
+    long long int N = n-1;
     long long int p=1, q=1;
     transform_num (N, p, q);
     // вычисляем b^q mod n, если оно равно 1 или n-1, то n простое (или псевдопростое)
-   unsigned long long int rem =Powmod (b, q, n);
+    long long int rem =Powmod (b, q, n);
     if (rem == 1 || rem == N)
         return true;
     // теперь вычисляем b^2q, b^4q, ... , b^((n-1)/2)
     // если какое-либо из них равно n-1, то n простое (или псевдопростое)
     for (int i=1; i<p; i++)
     {
-
         rem*=rem;
             rem%=n;
         if (rem == N)
@@ -94,11 +93,11 @@ int jacobi (long long int a, long long int b)
 	return s * jacobi (b % A, A);
 }
 //! Тест БПСВ на простоту числа
-bool bpsw (unsigned long long int n) {
+bool bpsw ( long long int n) {
 	if ((long long int)sqrt(n+0.0) * (long long int)sqrt(n+0.0) == n)  return false;//проверка на квадрат числа
 	long long int d=5;
 	while (true) { //бесконечный цикл
-		unsigned long long int g = GCD (n, abs(d));//взаимно простые или нет
+		 long long int g = GCD (n, abs(d));//взаимно простые или нет
 		if (1<g && g<n)  return false;
 		if (jacobi (d, n) == -1)  break;//подбираем d-число для параметра в тест Лукаса-Селфриджа
 		if(d<0) d=-d+2;
@@ -145,7 +144,7 @@ bool bpsw (unsigned long long int n) {
 	return false;
 }
 //! эту функцию нужно вызывать для проверки на простоту
-bool prime (unsigned long long int n) {
+bool prime ( long long int n) {
 	for (long long int i=0; i<trivial_limit && p[i]<n; ++i) //проверка на простые делители
 		if (n % p[i] == 0)
 			return false;
@@ -167,7 +166,7 @@ void prime_init() {
 	}
 }
 int main()
-{unsigned long long int n;
+{ long long int n;
 cout<<"Enter integer to test primality: ";
 cin>>n;
     prime_init();
