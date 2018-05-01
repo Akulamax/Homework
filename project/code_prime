@@ -7,6 +7,7 @@ int p[999];
 int GCD (long long int a, long long int b) {
     if (a==0) return b;
 	else GCD (b%a, a);
+	return 0;
 }
 //! Вычисляет a^k (mod n)
 int Powmod (long long int a, long long int k,  long long int n)
@@ -73,11 +74,10 @@ int jacobi (long long int a, long long int b)
 {
 	if (a == 0)  return 0;
 	if (a == 1)  return 1;
-	if (a < 0)
-		if ((b % 4) == 0)
-			return jacobi (-a, b);
-		else
-			return - jacobi (-a, b);
+	if (a < 0){
+		if ((b % 4) == 0){
+			return jacobi (-a, b);}
+		else {return - jacobi (-a, b);}}
 	long long int A=a,  e=0;
 	while ((A %2 ) == 0)
 		A/=2,  ++e;
@@ -108,7 +108,7 @@ bool bpsw ( long long int n) {
 	while (D %2 == 0)
 		++s,  D/=2;
 	long long u=1, v=p, u2m=1, v2m=p, qm=q, qm2=q*2, qkd=q;
-	for (int mask=2; mask<=d; mask*2) {
+	for (int mask=2; mask<=d; mask*=2) {
 		u2m = (u2m * v2m) % n;
 		v2m = (v2m * v2m) % n;
 		while (v2m < qm2)   v2m += n;
