@@ -1,0 +1,178 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+const int trivial_limit = 1000;
+int p[999];
+//! Наибольший общий делитель
+int GCD (int a, int b) {
+    if (a==0) return b;
+	else GCD (b%a, a);
+}
+//! Вычисляет a^k (mod n)
+int Powmod (int a, int k, int n)
+{
+    int res = 1;
+    while (k)
+        if (k%2!=0)
+            {res*=a;
+            res%=n;
+            --k;}
+        else
+            {a*=a;
+            a%=n;
+            k/=2;}
+    return res;
+}
+//! Переводит число n в форму q*2^p
+void transform_num (int n, int  p, int  q)
+{
+	int p_res = 0;
+	while (n%2==0)
+	{
+		++p_res;
+		n/=2;
+	}
+	p = p_res;
+	q = n;
+}
+//! Тест Миллера-Рабина
+bool miller_rabin (int n)
+{
+    // сначала проверяем тривиальные случаи
+    if (n == 2)
+        return true;
+    if (n < 2 || n%2==0)
+        return false;
+    // проверяем, что n и b взаимно просты (иначе это приведет к ошибке)
+    // если они не взаимно просты, то либо n не просто, либо нужно увеличить b
+        int b = 2;
+    for (int g; (g = GCD (n, b)) != 1; ++b)
+        if (n > g)
+            return false;
+    // разлагаем n-1 = q*2^p
+    int N = n-1;
+    int p=1, q=1;
+    transform_num (N, p, q);
+    // вычисляем b^q mod n, если оно равно 1 или n-1, то n простое (или псевдопростое)
+    int rem =Powmod (b, q, n);
+    if (rem == 1 || rem == N)
+        return true;
+    // теперь вычисляем b^2q, b^4q, ... , b^((n-1)/2)
+    // если какое-либо из них равно n-1, то n простое (или псевдопростое)
+    for (int i=1; i<p; i++)
+    {
+
+        rem*=rem;
+            rem%=n;
+        if (rem == N)
+            return true;
+    }
+    return false;
+}
+//! Вычисления символа Якоби
+int jacobi (int a, int b)
+{
+	if (a == 0)  return 0;
+	if (a == 1)  return 1;
+	if (a < 0)
+		if ((b % 4) == 0)
+			return jacobi (-a, b);
+		else
+			return - jacobi (-a, b);
+	int A=a,  e=0;
+	while ((A %2 ) == 0)
+		A/=2,  ++e;
+	int s;
+	if ((e %2 ) == 0 || (b % 8 ) == 1 || (b % 8 ) == 7)
+		s = 1;
+	else
+		s = -1;
+	if ((b % 4) == 3 && (A %4 ) == 3)
+		s = -s;
+	if (A == 1)
+		return s;
+	return s * jacobi (b % A, A);
+}
+//! Тест БПСВ на простоту числа
+bool bpsw (int n) {
+	if ((int)sqrt(n+0.0) * (int)sqrt(n+0.0) == n)  return false;//проверка на квадрат числа
+	int d=5;
+	while (true) { //бесконечный цикл
+		int g = GCD (n, abs(d));//взаимно простые или нет
+		if (1<g && g<n)  return false;
+		if (jacobi (d, n) == -1)  break;//подбираем d-число для параметра в тест Лукаса-Селфриджа
+		if(d<0) d=-d+2;
+            else d=-d-2;
+	}
+	int p=1,  q=(p*p-d)/4;//тест Лукаса-Селфриджа
+	int D=n+1,  s=0;
+	while (D %2 == 0)
+		++s,  D/=2;
+	long long u=1, v=p, u2m=1, v2m=p, qm=q, qm2=q*2, qkd=q;
+	for (int mask=2; mask<=d; mask*2) {
+		u2m = (u2m * v2m) % n;
+		v2m = (v2m * v2m) % n;
+		while (v2m < qm2)   v2m += n;
+		v2m -= qm2;
+		qm = (qm * qm) % n;
+		qm2 = qm * 2;
+		if (d & mask) {
+			long long t1 = (u2m * v) % n,  t2 = (v2m * u) % n,
+				t3 = (v2m * v) % n,  t4 = (((u2m * u) % n) * d) % n;
+			u = t1 + t2;
+			if (u % 2)  u += n;
+			u = (u /2) % n;
+			v = t3 + t4;
+			if (v % 2)  v += n;
+			v = (v/2) % n;
+			qkd = (qkd * qm) % n;
+		}
+	}
+	if (u==0 || v==0)  return true;
+	long long qkd2 = qkd*2;
+	for (int r=1; r<s; ++r) {
+		v = (v * v) % n - qkd2;
+		if (v < 0)  v += n;
+		if (v < 0)  v += n;
+		if (v >= n)  v -= n;
+		if (v >= n)  v -= n;
+		if (v == 0)  return true;
+		if (r < s-1) {
+			qkd = (qkd * 1ll * qkd) % n;
+			qkd2 = qkd * 2;
+		}
+	}
+	return false;
+}
+//! эту функцию нужно вызывать для проверки на простоту
+bool prime (int n) {
+	for (int i=0; i<trivial_limit && p[i]<n; ++i) //проверка на простые делители
+		if (n % p[i] == 0)
+			return false;
+	if (p[trivial_limit-1]*p[trivial_limit-1] >= n)
+		return true;
+	if (!miller_rabin (n))//тест Миллера-Рабина
+		return false;
+	return bpsw (n);
+}
+//! вызвать до первого вызова prime() *(записывает делители до trivial_limit)
+void prime_init() {
+	for (int i=2, j=0; j<trivial_limit; ++i) {
+		bool pr = true;
+		for (int k=2; k*k<=i; ++k)
+			if (i % k == 0)
+				pr = false;
+		if (pr)
+			p[j++] = i;
+	}
+}
+int main()
+{int n;
+cout<<"Enter integer to test primality: ";
+cin>>n;
+    prime_init();
+    if(prime (n))
+        cout<<n<<" is prime";
+        else cout<<n<<" is composite";
+    return 0;
+}
