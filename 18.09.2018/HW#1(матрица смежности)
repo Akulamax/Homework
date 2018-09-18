@@ -1,0 +1,36 @@
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    int V,E,a,b;
+    cout << "Enter vertexes: ";
+    cin >> V;
+    cout << "Enter edges: ";
+    cin >> E;
+    E=E+1;
+    V=V+1;
+    bool G[V][V];
+    for ( int i = 1; i < V; i++)
+        for ( int j = 1; j < V; j++)
+            G[i][j] = false;
+    cout << " Enter edges number: "<< endl;
+    for (int i = 1; i < E; i++)
+    {
+        cin >> a >> b;
+        G[a][b] = true;
+        G[b][a] = true;
+    }
+
+    for ( int i = 1; i < V; i++)
+    {
+        for ( int j = 1; j < V; j++)
+        {
+            cout << G[i][j]<< " ";
+        }
+        cout << endl;
+    }
+    return 0;
+}
+
