@@ -1,0 +1,44 @@
+#include <iostream>
+
+using namespace std;
+
+void dfs(int v, bool** G, bool* used, int V){
+used[v] = 1;
+for(int i = 0; i < V; i++){
+    if((used[i] == 0)&&(G[v][i] == 1)){
+        dfs(i, G, used,V);
+    }
+}
+}
+int main()
+{ setlocale(LC_ALL,"Rus");
+    int V, E;
+    cout << " Введите количество вершин ";
+    cin >> V;
+    cout << " Введите количество ребер ( меньшее, чем количество вершин) ";
+    cin >> E;
+    bool** G = new bool* [V];
+    for(int i = 0; i < V; i++)
+        G[i]=new bool [V];
+        for ( int i = 0; i < V; i++)
+        for ( int j = 0; j < V; j++)
+            G[i][j] = false;
+            if (E!=0){
+    cout << " Введите смежные ребра :"<< endl; // нумерация ребер начинается с 1
+    int a,b;
+    for (int i = 0; i < E; i++){
+        cout << " ";
+        cin >> a >> b;
+        G[a-1][b-1] = true;
+        G[b-1][a-1] = true;
+    }};
+    int k = 0;
+    bool used[V];
+    for(int i = 0; i < V; i++)
+        if(used[i] == 0){
+            k++;
+            dfs(i, G, used, V);
+        }
+    cout << " Количество компонент связности - " << k << endl;
+    return 0;
+}
