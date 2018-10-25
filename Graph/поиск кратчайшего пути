@@ -1,0 +1,65 @@
+#include <iostream>
+#include <queue>
+using namespace std;
+
+void bfs(int v1, int v2, bool** G,int V){
+    bool used[V];
+    int a[V], b[V];
+    for(int i = 0; i < V; i++)
+    used[i] = 0;
+    if (!used[v1]){
+    queue <int> A;
+    A.push(v1);
+    used[v1] = 1;
+    a[v1] = 0;
+    while(!A.empty()){
+    int v2 = A.front();
+    A.pop();
+    for( int j = 0; j < V; j++)
+    if((!used[j])&& (G[v2][j])){
+    A.push(j);
+    used[j] = 1;
+    a[j] = a[v2] + 1;
+    b[j] = v2;}}
+    }
+    cout << " Количество ребер(длина пути) "<< a[v2]; cout << endl;
+    int puti[a[v2] + 1];
+    int y = a[v2];
+    puti[y] = v2;
+    y--;
+    while(puti[y + 1]!= v1){
+        puti[y] = b[puti[y + 1]];
+        y--;
+    }
+    cout << " Путь: "<< endl;
+    for (int i = 0; i < a[v2] + 1; i++)
+        cout << puti[i] +1<< " ";
+
+}
+   int main()
+{ setlocale(LC_ALL,"Rus");
+    int V, E;
+    cout << " Введите количество вершин ";
+    cin >> V;
+    cout << " Введите количество ребер ( меньшее, чем количество вершин) ";
+    cin >> E;
+    bool** G = new bool* [V];
+    for(int i = 0; i < V; i++)
+        G[i]=new bool [V];
+        for ( int i = 0; i < V; i++)
+        for ( int j = 0; j < V; j++)
+            G[i][j] = false;
+            if (E!=0){
+    cout << " Введите смежные ребра :"<< endl; // нумерация ребер начинается с 1
+    int a,b;
+    for (int i = 0; i < E; i++){
+        cin >> a >> b;
+        G[a-1][b-1] = true;
+        G[b-1][a-1] = true;
+    }};
+    int v1,v2;
+    cout << " Enter vertices: ";
+    cin >> v1 >> v2;
+    bfs(v1-1,v2-1, G, V);
+    return 0;
+}
