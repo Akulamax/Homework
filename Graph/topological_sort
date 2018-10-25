@@ -1,1 +1,49 @@
-1
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+void dfs (int v, vector <int> *graph, vector<bool> &used, vector <int> &answer) {
+    used[v] = true; 
+    for (int i=0; i < graph[v].size(); i++) {
+        int to = graph[v][i]; 
+        if (!used[to])
+            dfs (to, graph, used, answer);
+    }
+    answer.push_back (v+1); 
+}
+
+void topological_sort(int n, vector <int> *graph, vector<bool> &used, vector <int> &answer) {
+    for (int i = 0; i < n; i++) 
+        used[i] = false;
+    for (int i = 0; i < n; i++)
+        if (!used[i])
+            dfs (i, graph, used, answer);
+    reverse (answer.begin(), answer.end());
+}
+
+int main() {
+    setlocale(LC_ALL,"Rus");
+    int V, E;
+    cout << " Введите количество вершин ";
+    cin >> V;
+     cout << " Введите количество ребер ";
+    cin >> E;
+    cout << " Введите смежные ребра :"<< endl;
+    int v, e;
+    vector <int> graph[100001];
+    vector <bool> used (V);
+    vector<int> answer;
+    for (int i = 0; i < E; i++){
+            cin >> v >> e;
+            graph[v-1].push_back(e-1);
+        }
+{
+        topological_sort(V, graph, used, answer);
+        for (int i = 0; i < answer.size(); i++)
+        {
+            cout << answer[i] << " ";
+        }
+        cout << endl;
+    }
+    return 0;
+}
