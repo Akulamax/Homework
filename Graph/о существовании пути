@@ -1,0 +1,48 @@
+#include <iostream>
+
+using namespace std;
+
+bool exist(int v1, int v2, bool** G, bool* used, int V){
+    used[v1] = 1;
+    for(int i = 0; i < V; i++){
+        if(G[v2][i] == 1){
+            return true;
+        }
+        else
+            if((used[i] == 0)&&(G[v1][i] == 1))
+                exist(i, v2, G, used, V);
+                return false;
+    }
+}
+int main()
+{ setlocale(LC_ALL,"Rus");
+    int V, E;
+    cout << " Введите количество вершин ";
+    cin >> V;
+    cout << " Введите количество ребер ( меньшее, чем количество вершин) ";
+    cin >> E;
+    bool** G = new bool* [V];
+    for(int i = 0; i < V; i++)
+        G[i]=new bool [V];
+        for ( int i = 0; i < V; i++)
+        for ( int j = 0; j < V; j++)
+            G[i][j] = false;
+            if (E!=0){
+    cout << " Введите смежные ребра :"<< endl; // нумерация ребер начинается с 1
+    int a,b;
+    for (int i = 0; i < E; i++){
+        cin >> a >> b;
+        G[a-1][b-1] = true;
+        G[b-1][a-1] = true;
+    }};
+    int v1, v2;
+    bool used[V];
+    cout << " Введите две вершины ";
+    cin >> v1 >> v2;
+    bool a = exist(v1-1, v2-2, G, used, V);
+    if (!a)
+        cout << " Путь есть ";
+    else
+        cout << " Пути нет ";
+    return 0;
+}
