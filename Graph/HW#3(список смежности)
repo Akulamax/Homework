@@ -13,7 +13,6 @@ terminal[k]=u;
 next_el[k]=head[v];
 head[v]=k;
 }
-//главная функция
 int main()
 {
 setlocale(LC_ALL,"Rus");
