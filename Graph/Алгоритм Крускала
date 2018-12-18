@@ -1,0 +1,57 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+void Kruskal (vector <pair <int, pair <int, int> > >& G, int V, int E){
+int cost = 0;
+vector < pair<int,int> > res;
+
+sort (G.begin(), G.end());
+vector<int> tree_id (V);
+for (int i=0; i<V; ++i)
+	tree_id[i] = i;
+for (int i=0; i<E; ++i)
+{
+	int a = G[i].second.first,  b = G[i].second.second,  l = G[i].first;
+	if (tree_id[a] != tree_id[b])
+	{
+		cost += l;
+		res.push_back (make_pair (a, b));
+		int old_id = tree_id[b],  new_id = tree_id[a];
+		for (int j=0; j<V; ++j)
+			if (tree_id[j] == old_id)
+				tree_id[j] = new_id;
+	}
+}
+    for(int i = 0; i < res.size(); i++)
+            cout << " "<< res[i].first << " " << res[i].second << endl;
+    }
+ void matrix(vector <pair <int, pair <int, int> > > & G, int E){
+     cout<<endl;
+        for (int i = 0; i < E; i++){
+            int weight,a,b;
+            cout << " Введите ребро: ";
+            cin >> a >> b;
+            cout  << " Введите вес этого ребра: ";
+            cin >> weight;
+            cout << endl;
+            G[i].first = weight;
+            G[i].second.first = a;
+            G[i].second.second = b;
+        }
+
+    }
+
+    int main(){
+        setlocale(LC_ALL,"Rus");
+        int V,E;
+        cout << " Введите количество вершин: ";
+        cin >> V;
+        cout << " Введите количество ребер: ";
+        cin >> E;
+        vector <pair <int, pair <int, int> > > G(E);
+        matrix(G,E);
+        cout << " Ребра нового графа: " << endl;
+        Kruskal(G,V,E);
+        return 0;
+    }
