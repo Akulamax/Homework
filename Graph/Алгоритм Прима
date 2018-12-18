@@ -1,8 +1,9 @@
 #include<iostream>
 #include<vector>
+#include<cstdlib>
 using namespace std;
 const int INF = 1000000000;
-int Prim(vector < vector<int> > & G,int V){
+void Prim(vector < vector<int> > & G,int V){
 
 vector<bool> used (V);
 vector<int> min_e (V, INF), sel_e (V, -1);
@@ -13,8 +14,8 @@ for (int i=0; i<V; ++i) {
 		if (!used[j] && (n == -1 || min_e[j] < min_e[n]))
 			n = j;
 	if (min_e[n] == INF) {
-		cout << "No MST!";
-		return 0;
+		cout << "Нет минимального остовного дерева";
+        exit(0);
 	}
 
 	used[n] = true;
@@ -27,49 +28,18 @@ for (int i=0; i<V; ++i) {
 			sel_e[to] = n;
 		}
 }
-return 0;
 }
  void matrix(vector < vector<int> > & G, int V){
-        cout << endl;
         G.reserve(V);
 for (int i=0, size=G.size(); i<size; ++i)
-    G       for (int j = 0; j<V; j++)
-                G[i][j] = INF;
-        int E;
-        cout << " Введите количество ребер: ";
-        cin >> E;
-        for (int i = 0; i < E; i++){
-            int weight,a,b;
-            cout << " Введите ребро: ";
-            cin >> a >> b;
-            cout  << " Введите вес этого ребра: ";
-            cin >> weight;
-            cout << endl;
-            G[a][b] = weight;
-            G[b][a] = weight;
-        }
- }
-
- int main(){
-     setlocale(LC_ALL,"Rus");
-        int V;
-        cout << " Введите количество вершин: ";
-        cin >> V;
-        vector < vector<int> >  G (V);
-        matrix(G,V);
-        cout << " Ребра нового графа: " << endl;
-        Prim(G,V);
-        return 0;
-    }
-
-
-[i].reserve(V);
+    G[i].reserve(V);
    for (int i = 0; i<V; i++)
             for (int j = 0; j<V; j++)
                 G[i][j] = INF;
         int E;
         cout << " Введите количество ребер: ";
         cin >> E;
+           cout << endl;
         for (int i = 0; i < E; i++){
             int weight,a,b;
             cout << " Введите ребро: ";
