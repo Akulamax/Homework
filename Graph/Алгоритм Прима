@@ -1,0 +1,95 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+const int INF = 1000000000;
+int Prim(vector < vector<int> > & G,int V){
+
+vector<bool> used (V);
+vector<int> min_e (V, INF), sel_e (V, -1);
+min_e[0] = 0;
+for (int i=0; i<V; ++i) {
+	int n = -1;
+	for (int j=0; j<V; ++j)
+		if (!used[j] && (n == -1 || min_e[j] < min_e[n]))
+			n = j;
+	if (min_e[n] == INF) {
+		cout << "No MST!";
+		return 0;
+	}
+
+	used[n] = true;
+	if (sel_e[n] != -1)
+		cout << n<< " " << sel_e[n] << endl;
+
+	for (int to=0; to<V; ++to)
+		if (G[n][to] < min_e[to]) {
+			min_e[to] = G[n][to];
+			sel_e[to] = n;
+		}
+}
+return 0;
+}
+ void matrix(vector < vector<int> > & G, int V){
+        cout << endl;
+        G.reserve(V);
+for (int i=0, size=G.size(); i<size; ++i)
+    G       for (int j = 0; j<V; j++)
+                G[i][j] = INF;
+        int E;
+        cout << " Введите количество ребер: ";
+        cin >> E;
+        for (int i = 0; i < E; i++){
+            int weight,a,b;
+            cout << " Введите ребро: ";
+            cin >> a >> b;
+            cout  << " Введите вес этого ребра: ";
+            cin >> weight;
+            cout << endl;
+            G[a][b] = weight;
+            G[b][a] = weight;
+        }
+ }
+
+ int main(){
+     setlocale(LC_ALL,"Rus");
+        int V;
+        cout << " Введите количество вершин: ";
+        cin >> V;
+        vector < vector<int> >  G (V);
+        matrix(G,V);
+        cout << " Ребра нового графа: " << endl;
+        Prim(G,V);
+        return 0;
+    }
+
+
+[i].reserve(V);
+   for (int i = 0; i<V; i++)
+            for (int j = 0; j<V; j++)
+                G[i][j] = INF;
+        int E;
+        cout << " Введите количество ребер: ";
+        cin >> E;
+        for (int i = 0; i < E; i++){
+            int weight,a,b;
+            cout << " Введите ребро: ";
+            cin >> a >> b;
+            cout  << " Введите вес этого ребра: ";
+            cin >> weight;
+            cout << endl;
+            G[a][b] = weight;
+            G[b][a] = weight;
+        }
+ }
+
+ int main(){
+     setlocale(LC_ALL,"Rus");
+        int V;
+        cout << " Введите количество вершин: ";
+        cin >> V;
+        vector < vector<int> >  G (V);
+        matrix(G,V);
+        cout << " Ребра нового графа: " << endl;
+        Prim(G,V);
+        return 0;
+    }
